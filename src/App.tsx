@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { Header } from './components/Header'
 
 import './global.css'
 
@@ -26,7 +27,7 @@ function App() {
   
 
   return (
-    <h1>Desafio 01 - Praticando Conceitos</h1>
+    <Header />
   )
 }
 

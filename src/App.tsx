@@ -1,33 +1,42 @@
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { CreateTask } from './components/CreateTask'
 import { Header } from './components/Header'
 
 import './global.css'
 
-interface TodoList {
+export interface Task {
   id: string
   title: string
   isCompleted: boolean
 }
 
-const todoList: TodoList[] = [
+const tasks: Task[] = [
   {
     id: uuidv4(),
     title: 'Concluir Ignite trilha ReactJS até Março de 2023',
-    isCompleted: false
+    isCompleted: false,
   },
   {
     id: uuidv4(),
     title: 'Concluir GoExpert até Junho de 2023',
-    isCompleted: false
-  }
+    isCompleted: false,
+  },
 ]
 
 function App() {
-  console.log(todoList);
-  
+  const [taskList, setTaskList] = useState<Task[]>(tasks)
 
   return (
-    <Header />
+    <>
+      <Header />
+      <CreateTask setTasks={setTaskList} />
+      <ul>
+        {taskList.map((task) => (
+          <li key={task.id}>{task.title}</li>
+        ))}
+      </ul>
+    </>
   )
 }
 

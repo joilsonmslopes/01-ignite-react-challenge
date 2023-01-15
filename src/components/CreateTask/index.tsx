@@ -8,7 +8,7 @@ import {
   SetStateAction,
   useState,
 } from 'react'
-import { Task } from '../../App'
+import { Task } from '../../types/task'
 import { v4 as uuidv4 } from 'uuid'
 
 interface CreateTaskProps {

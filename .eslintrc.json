@@ -46,6 +46,18 @@
         "react/react-in-jsx-scope": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "no-console": "warn",
+        "@typescript-eslint/strict-boolean-expressions": [
+            "off",
+            {
+          "allowString": true,
+          "allowNumber": true,
+          "allowNullableObject": true,
+          "allowNullableBoolean": true,
+          "allowNullableNumber": false,
+          "allowNullableString": true,
+          "allowAny": false
+            }
+          ],
         "@typescript-eslint/no-confusing-void-expression": "off"
     }
 }

@@ -32,7 +32,14 @@ export const CreateTask = ({ setTasks }: CreateTaskProps) => {
       isCompleted: false,
     }
 
-    setTasks((oldState) => [...oldState, task])
+    setTasks((oldState) => {
+      window.localStorage.setItem(
+        'ls_task',
+        JSON.stringify([...oldState, task])
+      )
+
+      return [...oldState, task]
+    })
 
     setNewTask('')
   }

@@ -11,11 +11,11 @@ interface TasksListProps {
 }
 
 export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
-  const countTasks = tasks.reduce(
+  const countTasks = tasks?.reduce(
     (countTask, task) => {
       countTask = {
         total: countTask.total + 1,
-        completedTasks: task.isCompleted
+        completedTasks: task?.isCompleted
           ? countTask.completedTasks + 1
           : countTask.completedTasks,
       }
@@ -29,7 +29,10 @@ export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
   )
 
   const handleChangeCheckboxValue = (taskId: string) => {
-    const newTodoList = tasks.map((task) => {
+    if (!tasks) {
+      return
+    }
+    const newTodoList = tasks?.map((task) => {
       if (task.id === taskId) {
         return {
           ...task,
@@ -40,11 +43,19 @@ export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
       return task
     })
 
+    window.localStorage.setItem('ls_task', JSON.stringify(newTodoList))
+
     setTasks(newTodoList)
   }
 
   const handleClickOnDeleteTask = (taskId: string) => {
     const filteredTasks = tasks.filter(({ id }) => id !== taskId)
+
+    window.localStorage.setItem('ls_task', JSON.stringify(filteredTasks))
+
+    if (!filteredTasks.length) {
+      window.localStorage.removeItem('ls_task')
+    }
 
     setTasks(filteredTasks)
   }
@@ -77,6 +88,7 @@ export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
                       value={task.title}
                       onChange={() => handleChangeCheckboxValue(task.id)}
                       id={task.id}
+                      checked={task.isCompleted}
                     />
                     <label htmlFor={task.id}>{task.title}</label>
                   </label>

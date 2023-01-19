@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import todoIcon from '../../assets/rocket.svg'
-import style from './style.module.css'
+import style from './header.module.css'
 
 export const Header = () => {
   return (

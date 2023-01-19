@@ -1,10 +1,11 @@
 import { InputText } from '../InputText'
-import styles from './style.module.css'
+import styles from './create-task.module.css'
 import { PlusCircle } from 'phosphor-react'
 import {
   ChangeEvent,
   Dispatch,
   FormEvent,
+  InvalidEvent,
   SetStateAction,
   useState,
 } from 'react'
@@ -17,6 +18,10 @@ interface CreateTaskProps {
 
 export const CreateTask = ({ setTasks }: CreateTaskProps) => {
   const [newTask, setNewTask] = useState('')
+
+  const handleNewTaskInvalid = (event: InvalidEvent<HTMLInputElement>) => {
+    event?.target.setCustomValidity('Campo requerido')
+  }
 
   const handleClickOnSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -33,18 +38,24 @@ export const CreateTask = ({ setTasks }: CreateTaskProps) => {
   }
 
   const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
+    event?.target.setCustomValidity('')
+
     const { value } = event.target
 
     setNewTask(value)
   }
 
   return (
-    <form className={styles.createTaskWrapper} onSubmit={handleClickOnSubmit}>
+    <form
+      className={styles.createTaskWrapper}
+      onSubmit={(event) => handleClickOnSubmit(event)}
+    >
       <InputText
         type="text"
-        name="task"
+        name="newTask"
         label="Adicione uma nova tarefa"
         value={newTask}
+        onInvalid={handleNewTaskInvalid}
         onChange={(event) => handleChangeInputValue(event)}
         required
       />

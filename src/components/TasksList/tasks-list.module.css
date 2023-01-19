@@ -1,0 +1,179 @@
+.listTasksWrapper {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.container {
+  max-width: 736px;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.container header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container header .createdTasks,
+.container header .completedTasks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.container header .createdTasks h3 {
+  font-size: 0.875rem;
+  color: var(--blue-500);
+  font-weight: 700;
+}
+
+.container header .completedTasks h3 {
+  font-size: 0.875rem;
+  color: var(--purple-500);
+  font-weight: 700;
+}
+
+.container header .createdTasks span,
+.container header .completedTasks span {
+  background-color: var(--gray-400);
+  color: var(--gray-200);
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: var(--borderRadius-circle);
+  padding: 2px 8px;
+}
+
+.container .emptyContent {
+  border-radius: var(--borderRadius-medium);
+  border-top: 1px solid var(--gray-400);
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.container .emptyContent .imageWrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+}
+
+.container .emptyContent .imageWrapper img {
+  width: 100%;
+  height: 100%;
+}
+
+.container .emptyContent .message {
+  text-align: center;
+}
+
+.container .emptyContent strong {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.375rem;
+  color: var(--gray-300);
+}
+
+.listTasksWrapper .container .emptyContent p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+  color: var(--gray-300);
+}
+
+.container .filledContent {
+  list-style: none;
+  box-sizing: content-box;
+}
+
+.container .filledContent .taskWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  background-color: var(--gray-500);
+  outline: 1px solid var(--gray-400);
+}
+
+.container .filledContent .taskWrapper:has(input[type='checkbox']:checked) {
+  outline: none;
+}
+
+.container .filledContent .taskWrapper + .taskWrapper {
+  margin-top: 1rem;
+}
+
+.container .filledContent .taskWrapper .inputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.container .filledContent .taskWrapper .inputWrapper input[type='checkbox'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  border: 0.125rem solid var(--blue-500);
+  border-radius: var(--borderRadius-circle);
+
+  width: 1.125rem;
+  height: 1.125rem;
+  position: relative;
+}
+
+.container .filledContent .inputWrapper input[type='checkbox']::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  display: block;
+  border-left: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  width: 7px;
+  height: 4px;
+  transform: rotate(-45deg);
+  opacity: 0;
+}
+
+.container .filledContent .inputWrapper input[type='checkbox']:checked {
+  background: var(--purple-500);
+  border-color: var(--purple-500);
+}
+
+.container .filledContent .inputWrapper input[type='checkbox']:checked::before {
+  opacity: 1;
+}
+
+.container .filledContent .inputWrapper input[type='checkbox']:checked ~ label {
+  text-decoration: line-through;
+  color: var(--gray-300);
+}
+
+.container .filledContent .inputWrapper label {
+  margin-left: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--gray-100);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.container .filledContent .taskWrapper button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

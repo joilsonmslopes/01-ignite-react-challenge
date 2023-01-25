@@ -1,14 +1,9 @@
 import { PlusCircle } from 'phosphor-react'
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useState,
-} from 'react'
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { Task } from '../../types/task'
 import { v4 as uuidv4 } from 'uuid'
 import * as Style from './style'
+import { TextField } from '../TextField'
 
 interface CreateTaskProps {
   tasks: Task[]
@@ -63,13 +58,11 @@ export const CreateTask = ({ tasks, setTasks }: CreateTaskProps) => {
     setNewTask('')
   }
 
-  const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target
-
+  const handleChangeInputValue = (value: string) => {
     setNewTask(value)
 
     const hasDuplicatedTask = tasks.find(
-      (item) => item.title.toLowerCase() === event.target.value.toLowerCase()
+      (item) => item.title.toLowerCase() === value.toLowerCase()
     )
 
     if (hasDuplicatedTask) {
@@ -87,12 +80,11 @@ export const CreateTask = ({ tasks, setTasks }: CreateTaskProps) => {
 
   return (
     <Style.CreateTaskWrapper onSubmit={(event) => handleClickOnSubmit(event)}>
-      <Style.TextField
+      <TextField
         label="Adicione uma nova tarefa"
         value={newTask}
-        onChange={handleChangeInputValue}
-        helperText={error.hasError ? error.errorMessage : ''}
-        hasError={error.hasError}
+        handleChangeInputValue={handleChangeInputValue}
+        customError={error}
       />
       <Style.Button variant="contained" type="submit">
         Criar <PlusCircle size={16} />

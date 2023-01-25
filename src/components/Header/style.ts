@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 import { Link } from 'react-router-dom'
 
 export const Header = styled('header')(({ theme }) => ({
-  background: theme.palette.primary.dark,
+  background: theme.palette.grey[700],
   padding: '4.5rem 2rem 5rem',
 }))
 
@@ -14,13 +14,13 @@ export const RouterLink = styled(Link)({
 })
 
 export const Title = styled('h1')(({ theme }) => ({
-  marginLeft: '0.75rem',
+  margin: '0 0 0 0.75rem',
   fontSize: '2.5rem',
   fontWeight: '900',
   lineHeight: '28px',
   color: theme.palette.secondary.main,
   '& span': {
-    color: '#8284fa',
+    color: theme.palette.primary.main,
   },
 }))
 

@@ -1,10 +1,9 @@
-import { ThemeProvider } from '@mui/material'
+import { ThemeProvider, CssBaseline } from '@mui/material'
 import { useState } from 'react'
 import { CreateTask } from './components/CreateTask'
 import { Header } from './components/Header'
 import { TaskList } from './components/TaskList'
 
-import './global.css'
 import { theme } from './styles/theme'
 import { Task } from './types/task'
 
@@ -21,9 +20,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <CreateTask tasks={taskList} setTasks={setTaskList} />
-      <TaskList tasks={taskList} setTasks={setTaskList} />
+      <CssBaseline enableColorScheme>
+        <Header />
+        <CreateTask tasks={taskList} setTasks={setTaskList} />
+        <TaskList tasks={taskList} setTasks={setTaskList} />
+      </CssBaseline>
     </ThemeProvider>
   )
 }

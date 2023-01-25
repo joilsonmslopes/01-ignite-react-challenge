@@ -14,6 +14,9 @@
     "src/**/*.{js,jsx,ts,tsx,css,scss,md}": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "phosphor-react": "^1.4.1",

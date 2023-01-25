@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom'
 import todoIcon from '../../assets/rocket.svg'
-import style from './header.module.css'
+import * as Style from './style'
 
 export const Header = () => {
   return (
-    <div className={style.header}>
-      <Link to="/" className={style.logoWrapper}>
-        <img src={todoIcon} alt="Logo ToDo List" />
-        <h1>
+    <Style.Header>
+      <Style.RouterLink to="/">
+        <Style.Image src={todoIcon} alt="Logo ToDo List" />
+        <Style.Title>
           to<span>do</span>
-        </h1>
-      </Link>
-    </div>
+        </Style.Title>
+      </Style.RouterLink>
+    </Style.Header>
   )
 }

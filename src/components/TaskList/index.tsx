@@ -1,16 +1,17 @@
+import { Dispatch, SetStateAction } from 'react'
 import { Task } from '../../types/task'
-import styles from './tasks-list.module.css'
 
 import clipboardImg from '../../assets/clipboard.svg'
 import { Trash } from 'phosphor-react'
-import { Dispatch, SetStateAction } from 'react'
+
+import * as Style from './style'
 
 interface TasksListProps {
   tasks: Task[]
   setTasks: Dispatch<SetStateAction<Task[]>>
 }
 
-export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
+export const TaskList = ({ tasks, setTasks }: TasksListProps) => {
   const countTasks = tasks?.reduce(
     (countTask, task) => {
       countTask = {
@@ -61,56 +62,62 @@ export const TasksList = ({ tasks, setTasks }: TasksListProps) => {
   }
 
   return (
-    <div className={styles.listTasksWrapper}>
-      <div className={styles.container}>
-        <header>
-          <div className={styles.createdTasks}>
-            <h3>Tarefas criadas</h3>
-            <span>{countTasks.total}</span>
-          </div>
-          <div className={styles.completedTasks}>
-            <h3>Concluídas</h3>
-            <span>
+    <Style.Container>
+      <Style.Content>
+        <Style.ContentHeader>
+          <Style.HeaderTitleWrapper>
+            <Style.HeaderTitle tasktype="created">
+              Tarefas criadas
+            </Style.HeaderTitle>
+            <Style.Span>{countTasks.total}</Style.Span>
+          </Style.HeaderTitleWrapper>
+          <Style.HeaderTitleWrapper>
+            <Style.HeaderTitle tasktype="completed">
+              Concluídas
+            </Style.HeaderTitle>
+            <Style.Span>
               {tasks.length > 0
                 ? `${countTasks.completedTasks} de ${countTasks.total}`
                 : countTasks.completedTasks}
-            </span>
-          </div>
-        </header>
+            </Style.Span>
+          </Style.HeaderTitleWrapper>
+        </Style.ContentHeader>
         {tasks.length > 0 ? (
-          <ul className={styles.filledContent}>
+          <Style.FilledContent>
             {tasks.map((task) => {
               return (
-                <li key={task.id} className={styles.taskWrapper}>
-                  <label htmlFor={task.id} className={styles.inputWrapper}>
-                    <input
+                <Style.TaskWrapper key={task.id}>
+                  <Style.LabelWrapper htmlFor={task.id}>
+                    <Style.CheckBox
                       type="checkbox"
                       value={task.title}
                       onChange={() => handleChangeCheckboxValue(task.id)}
                       id={task.id}
                       checked={task.isCompleted}
                     />
-                    <label htmlFor={task.id}>{task.title}</label>
-                  </label>
-                  <button onClick={() => handleClickOnDeleteTask(task.id)}>
+                    <Style.Label htmlFor={task.id}>{task.title}</Style.Label>
+                  </Style.LabelWrapper>
+                  <Style.Button
+                    onClick={() => handleClickOnDeleteTask(task.id)}
+                  >
                     <Trash size={24} color="#808080" />
-                  </button>
-                </li>
+                  </Style.Button>
+                </Style.TaskWrapper>
               )
             })}
-          </ul>
+          </Style.FilledContent>
         ) : (
-          <div className={styles.emptyContent}>
-            <div className={styles.imageWrapper}>
-              <img src={clipboardImg} alt="clipboard" />
-            </div>
-            <div className={styles.message}>
+          <Style.EmptyContent>
+            <Style.ImageWrapper>
+              <Style.Image src={clipboardImg} alt="clipboard" />
+            </Style.ImageWrapper>
+            <Style.EmptyContentMessage>
               <strong>Você ainda não tem tarefas cadastradas</strong>
               <p>Crie tarefas e organize seus itens a fazer</p>
-            </div>
-          </div>
+            </Style.EmptyContentMessage>
+          </Style.EmptyContent>
         )}
-      </div>
-    </div>
+      </Style.Content>
+    </Style.Container>
   )
 }

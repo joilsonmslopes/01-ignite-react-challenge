@@ -1,24 +1,12 @@
+import { ThemeProvider } from '@mui/material'
 import { useState } from 'react'
-// import { v4 as uuidv4 } from 'uuid'
 import { CreateTask } from './components/CreateTask'
 import { Header } from './components/Header'
-import { TasksList } from './components/TasksList'
+import { TaskList } from './components/TaskList'
 
 import './global.css'
+import { theme } from './styles/theme'
 import { Task } from './types/task'
-
-// const tasks: Task[] = [
-//   {
-//     id: uuidv4(),
-//     title: 'Concluir Ignite trilha ReactJS até Março de 2023',
-//     isCompleted: false,
-//   },
-//   {
-//     id: uuidv4(),
-//     title: 'Concluir GoExpert até Junho de 2023',
-//     isCompleted: false,
-//   },
-// ]
 
 function App() {
   const [taskList, setTaskList] = useState<Task[]>(() => {
@@ -32,11 +20,11 @@ function App() {
   })
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
-      <CreateTask setTasks={setTaskList} />
-      <TasksList tasks={taskList} setTasks={setTaskList} />
-    </>
+      <CreateTask tasks={taskList} setTasks={setTaskList} />
+      <TaskList tasks={taskList} setTasks={setTaskList} />
+    </ThemeProvider>
   )
 }
 

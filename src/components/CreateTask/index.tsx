@@ -1,30 +1,49 @@
-import { InputText } from '../InputText'
-import styles from './create-task.module.css'
 import { PlusCircle } from 'phosphor-react'
 import {
   ChangeEvent,
   Dispatch,
   FormEvent,
-  InvalidEvent,
   SetStateAction,
   useState,
 } from 'react'
 import { Task } from '../../types/task'
 import { v4 as uuidv4 } from 'uuid'
+import * as Style from './style'
 
 interface CreateTaskProps {
+  tasks: Task[]
   setTasks: Dispatch<SetStateAction<Task[]>>
 }
 
-export const CreateTask = ({ setTasks }: CreateTaskProps) => {
+export const CreateTask = ({ tasks, setTasks }: CreateTaskProps) => {
   const [newTask, setNewTask] = useState('')
-
-  const handleNewTaskInvalid = (event: InvalidEvent<HTMLInputElement>) => {
-    event?.target.setCustomValidity('Campo requerido')
-  }
+  const [error, setError] = useState({
+    hasError: false,
+    errorMessage: '',
+  })
 
   const handleClickOnSubmit = (event: FormEvent) => {
     event.preventDefault()
+
+    const hasDuplicatedTask = tasks.find(
+      (item) => item.title.toLowerCase() === newTask.toLowerCase()
+    )
+
+    if (hasDuplicatedTask) return
+
+    if (!newTask) {
+      setError({
+        hasError: true,
+        errorMessage: 'Campo obrigatório',
+      })
+
+      return
+    }
+
+    setError({
+      hasError: false,
+      errorMessage: '',
+    })
 
     const task: Task = {
       id: uuidv4(),
@@ -45,30 +64,39 @@ export const CreateTask = ({ setTasks }: CreateTaskProps) => {
   }
 
   const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-    event?.target.setCustomValidity('')
-
     const { value } = event.target
 
     setNewTask(value)
+
+    const hasDuplicatedTask = tasks.find(
+      (item) => item.title.toLowerCase() === event.target.value.toLowerCase()
+    )
+
+    if (hasDuplicatedTask) {
+      setError({
+        hasError: true,
+        errorMessage: 'Essa task já existe. Tente Novamente.',
+      })
+    } else {
+      setError({
+        hasError: false,
+        errorMessage: '',
+      })
+    }
   }
 
   return (
-    <form
-      className={styles.createTaskWrapper}
-      onSubmit={(event) => handleClickOnSubmit(event)}
-    >
-      <InputText
-        type="text"
-        name="newTask"
+    <Style.CreateTaskWrapper onSubmit={(event) => handleClickOnSubmit(event)}>
+      <Style.TextField
         label="Adicione uma nova tarefa"
         value={newTask}
-        onInvalid={handleNewTaskInvalid}
-        onChange={(event) => handleChangeInputValue(event)}
-        required
+        onChange={handleChangeInputValue}
+        helperText={error.hasError ? error.errorMessage : ''}
+        hasError={error.hasError}
       />
-      <button type="submit">
+      <Style.Button variant="contained" type="submit">
         Criar <PlusCircle size={16} />
-      </button>
-    </form>
+      </Style.Button>
+    </Style.CreateTaskWrapper>
   )
 }
